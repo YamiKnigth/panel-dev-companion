@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  pterodev-companion:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pterodev_companion
+    restart: always
+    ports:
+      - "4000:4000"
+    environment:
+      - SECRET_ENCRYPT_KEY=${SECRET_ENCRYPT_KEY}
+      - JWT_SECRET=${JWT_SECRET:-super-secret-pterodev-companion-key}
+      - PTERODACTYL_URL=${PTERODACTYL_URL:-https://panel.fenixcloud.xyz/api/client}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - DB_PATH=/app/data/companion.db
+    volumes:
+      - companion_data:/app/data
+
+volumes:
+  companion_data:
